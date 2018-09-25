@@ -1,4 +1,4 @@
-version: '2'
+version: '3.4'
 
 services:
   nginx:
@@ -33,6 +33,15 @@ services:
     ports:
       - "27017:27017"
 
+  # perlwx:
+  #   image: perl:v1.0
+  #   volumes:
+  #     - ../Code/My/perlWx:/var/www
+  #   command: |
+  #     /bin/bash -c "
+  #       perl /var/www/index.pl
+  #     "
+
   # influxdb:
   #   image: influxdb:v1.0
   #   ports: 
@@ -51,7 +60,7 @@ services:
   #     - "influxdb:8086"
 
   phpfpm:
-    image: php:7.2-fpm
+    image: ado/php7-gd
     volumes:
       - ../Code:/var/www/html
       - ../paycert:/home/paycert
