@@ -12,8 +12,8 @@ RUN	docker-php-ext-install mysqli pdo_mysql pcntl gd \
     
 	&& pecl install redis \
     && docker-php-ext-enable redis \
-    && docker-php-ext-enable bcmath \
-
+    && docker-php-ext-install bcmath \
+   # && pecl install swoole \
 	# 用完包管理器后安排打扫卫生可以显著的减少镜像大小
     && apt-get clean \
     && apt-get autoclean \

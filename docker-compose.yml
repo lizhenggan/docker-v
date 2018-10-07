@@ -64,6 +64,7 @@ services:
     volumes:
       - ../Code:/var/www/html
       - ../paycert:/home/paycert
+      - ./php-file:/home/php-file
     ports:
       - "9000"
       - "9501:9501"
