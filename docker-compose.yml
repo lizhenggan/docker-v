@@ -60,14 +60,15 @@ services:
   #     - "influxdb:8086"
 
   phpfpm:
-    image: ado/php7-gd
+    image: php7.2:v1.0
     volumes:
       - ../Code:/var/www/html
       - ../paycert:/home/paycert
-      - ./php-file:/home/php-file
+      - ./php-fpm7.2/queue:/etc/supervisor/conf.d
     ports:
       - "9000"
       - "9501:9501"
     links:
       - mysql
       - mongodb 
+#    command: supervisord -c /etc/supervisor/conf.d/tpqueue.conf
