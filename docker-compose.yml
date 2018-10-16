@@ -63,8 +63,8 @@ services:
     image: php7.2:v1.0
     volumes:
       - ../Code:/var/www/html
-      - ../paycert:/home/paycert
       - ./php-fpm7.2/queue:/etc/supervisor/conf.d
+      - ./php-fpm7.2/kuozan:/home/kuozan
     ports:
       - "9000"
       - "9501:9501"
