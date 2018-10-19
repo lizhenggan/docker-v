@@ -19,7 +19,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql:/etc/mysql/mysql.conf.d
+      - ./mysql/conf.d:/etc/mysql/mysql.conf.d
+      - ./mysql/data/:/var/mysql
 
   redis:
     image: redis:3.2.9-alpine
