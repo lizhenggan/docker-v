@@ -11,6 +11,7 @@ services:
       - ../Code:/var/www/html
     links:
       - phpfpm
+      - phpfpm2
 
   mysql:
     image: mysql:5.6
@@ -34,42 +35,29 @@ services:
     ports:
       - "27017:27017"
 
-  # perlwx:
-  #   image: perl:v1.0
-  #   volumes:
-  #     - ../Code/My/perlWx:/var/www
-  #   command: |
-  #     /bin/bash -c "
-  #       perl /var/www/index.pl
-  #     "
-
-  # influxdb:
-  #   image: influxdb:v1.0
-  #   ports: 
-  #     - "8086:8086"
-  #     - "8083:8083"
-
-  # cadvisor:
-  #   image: cadvisor:v1.0
-  #   ports:
-  #     - "8082:8080"
-  #   storage_driver:
-  #     - "influxdb"
-  #   storage_driver_db:
-  #     - "docker_db"
-  #   storage_driver_host:
-  #     - "influxdb:8086"
 
   phpfpm:
-    image: php7.2:v1.0
+    image: php:v7.2
     volumes:
       - ../Code:/var/www/html
       - ./php-fpm7.2/queue:/etc/supervisor/conf.d
       - ./php-fpm7.2/kuozan:/home/kuozan
-    ports:
-      - "9000"
-      - "9501:9501"
+#    ports:
+#      - "9000"
+#      - "9501:9501"
+    links:
+      - mysql
+      - mongodb
+ 
+  phpfpm2:
+    image: php:v7.2
+    volumes:
+      - ../Code:/var/www/html
+      - ./php-fpm7.2/queue:/etc/supervisor/conf.d
+      - ./php-fpm7.2/kuozan:/home/kuozan
+#    ports:
+#      - "9000"
+#      - "9501:9501"
     links:
       - mysql
       - mongodb 
-#    command: supervisord -c /etc/supervisor/conf.d/tpqueue.conf
