@@ -6,9 +6,8 @@ RUN apt-get install -y libfreetype6-dev \
         libpng-dev 
 
 RUN	docker-php-ext-install mysqli pdo_mysql pcntl gd \
-
-	# && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    # && docker-php-ext-install -j$(nproc) gd \
+	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+        && docker-php-ext-install -j$(nproc) gd \
     
 	&& pecl install redis \
     && docker-php-ext-enable redis \
@@ -19,5 +18,16 @@ RUN	docker-php-ext-install mysqli pdo_mysql pcntl gd \
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
-COPY php.ini /usr/local/etc/php/
+COPY ./kuozan/mongodb-1.4.3.tgz /home
+
+RUN apt-get update \
+#    && apt-get install opensll \
+     && apt-get install -y libssl-dev
+
+RUN tar -zxvf /home/mongodb-1.4.3.tgz \
+    && cd mongodb-1.4.3 \
+    && phpize \
+    && ./configure --with-mongodb-ssl=openssl \
+    && make \
+    && make install
 

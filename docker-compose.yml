@@ -37,14 +37,16 @@ services:
 
 
   phpfpm:
-    image: php:v7.2
+    image: php7.2:v2.0
     volumes:
       - ../Code:/var/www/html
       - ./php-fpm7.2/queue:/etc/supervisor/conf.d
       - ./php-fpm7.2/kuozan:/home/kuozan
-#    ports:
+      - ./php-fpm7.2/phpini:/usr/local/etc/php
+    ports:
 #      - "9000"
-#      - "9501:9501"
+      - "9501:9501"
+      - "9500:9500"
     links:
       - mysql
       - mongodb

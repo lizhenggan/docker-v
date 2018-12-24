@@ -1,0 +1,5 @@
+{
+    "require": {
+        "jenner/crontab": "1.5.1"
+    }
+}
