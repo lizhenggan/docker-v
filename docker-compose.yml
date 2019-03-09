@@ -35,6 +35,17 @@ services:
     ports:
       - "27017:27017"
 
+  python:
+    image: python:v3
+    ports:
+      - "5000:5000"
+    volumes:
+      - ../Code/Python:/var/www
+      - ./python3/supervisord:/etc/supervisor/conf.d
+    links:
+      - mysql
+      - redis
+    command: '/usr/local/bin/gunicorn  -c gunicorn.py server:app'
 
   phpfpm:
     image: php7.2:v2.0
@@ -62,4 +73,13 @@ services:
 #      - "9501:9501"
     links:
       - mysql
-      - mongodb 
+      - mongodb
+ 
+# gitlab-runner
+  gitlab-runner:
+    image: gitlab/gitlab-runner
+    restart: always
+    hostname: gitlab-runner
+    container_name: gitlab-runner
+    volumes:
+      - ./runner:/etc/gitlab-runner

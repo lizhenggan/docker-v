@@ -1,0 +1,4 @@
+Flask
+PyMySQL
+redis
+gunicorn==19.7.1.
