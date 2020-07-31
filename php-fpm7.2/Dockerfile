@@ -20,8 +20,12 @@ RUN docker-php-ext-install mysqli pdo_mysql pcntl gd \
     && docker-php-ext-install sockets \
     && apt-get clean \
     && apt-get autoclean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer global require hirak/prestissimo \
+    && composer clear-cache \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.composer \
+    && cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime 
 
 
 # nghttp
@@ -48,7 +52,8 @@ RUN  tar -zxvf /home/swoole-src-4.4.2.tar.gz \
     --enable-mysqlnd \
     && make clean \
     && make \
-    && make install
+    && make install \
+    && rm -rf /home/kuozan/swoole-src-4.4.2.tar.gz
 
 #COPY ./kuozan/mongodb-1.4.3.tgz /home
 
